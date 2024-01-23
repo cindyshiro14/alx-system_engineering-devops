@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
+# Script to install and configure Nginx on Ubuntu 16.04 LTS
 
 # Update package lists
-apt-get update
+sudo apt-get update
 
 # Install Nginx with automatic "yes" to prompts
-apt-get install -y nginx
+sudo apt-get install -y nginx
 
 # Configure Nginx to listen on port 80
 echo "server {
@@ -19,7 +20,7 @@ echo "server {
     location / {
         echo 'Hello World!';
     }
-}" > /etc/nginx/sites-available/default
+}" | sudo tee /etc/nginx/sites-available/default > /dev/null
 
 # Restart Nginx without using systemctl
-service nginx restart
+sudo service nginx restart
