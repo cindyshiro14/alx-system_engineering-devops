@@ -1,14 +1,6 @@
 #!/usr/bin/env bash
-# Script to install and configure Nginx on Ubuntu 16.04 LTS
+# Nginx Configuration Script
 
-# Update package lists
-sudo apt-get update
-
-# Install Nginx with automatic "yes" to prompts
-sudo apt-get install -y nginx
-
-# Create Nginx configuration file
-sudo tee /etc/nginx/sites-available/default <<EOF
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
@@ -19,13 +11,6 @@ server {
     server_name _;
 
     location / {
-        echo 'Hello World!';
+        try_files $uri $uri/ =404;
     }
 }
-EOF
-
-# Create a symbolic link to enable the site
-sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
-
-# Restart Nginx without using systemctl
-sudo /etc/init.d/nginx restart
