@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Configures HAproxy on lb-01 server to distribute traffic to web-01 and web-02
+
+# Install HAproxy if not already installed
+sudo apt-get update
+sudo apt-get -y install haproxy
+
+# Configure HAproxy
+sudo tee /etc/haproxy/haproxy.cfg > /dev/null << EOL
+frontend http_front
+    bind *:80
+    mode http
+    default_backend http_back
+
+backend http_back
+    mode http
+    balance roundrobin
+    server web-01 [STUDENT_ID]-web-01:80 check
+    server web-02 [STUDENT_ID]-web-02:80 check
+EOL
+
+# Ensure HAproxy can be managed via an init script
+sudo systemctl enable haproxy
+
+# Restart HAproxy to apply changes
+sudo service haproxy restart
