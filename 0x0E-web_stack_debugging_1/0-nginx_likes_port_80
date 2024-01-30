@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Update package list and install necessary tools
+apt-get update
+apt-get install -y nginx net-tools
+
+# Check Nginx configuration
+nginx_config="/etc/nginx/sites-available/default"
+if grep -q "listen 80" "$nginx_config"; then
+  echo "Nginx is already configured to listen on port 80"
+else
+  # Add or update the listen directive in the Nginx configuration
+  sed -i '/listen [::]:80 default_server/!s/listen [0-9]\+ default_server;/listen 80 default_server;/' "$nginx_config"
+  echo "Updated Nginx configuration to listen on port 80"
+fi
+
+# Restart Nginx to apply changes
+service nginx restart
+
+# Check if Nginx is now listening on port 80
+if netstat -tuln | grep -q ":80 "; then
+  echo "Nginx is now listening on port 80"
+else
+  echo "Error: Nginx is not listening on port 80. Check the configuration and firewall settings."
+fi
