@@ -48,7 +48,7 @@ frontend www-https
 
 backend holberton_backend
     mode http
-    server web-server-1 34.207.221.62:80 check
+    server web-server-1 <web-01-IP>:80 check
 EOF
 
 # Restart HAProxy to apply changes
