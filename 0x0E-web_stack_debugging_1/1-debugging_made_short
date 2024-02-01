@@ -5,6 +5,6 @@ apt-get update
 apt-get install -y nginx
 sed -i 's/listen 80;/listen 80 default_server;/g' /etc/nginx/sites-available/default
 nginx -s stop
-nginx
+service nginx start
 sleep 2
 curl 0:80
