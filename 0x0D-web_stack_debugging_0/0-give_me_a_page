@@ -1,5 +1,10 @@
-#!/usr/bin/env bash
 # Install Apache and create Hello Holberton page
-RUN apt-get update
-RUN apt-get install -y apache2
-RUN echo "Hello Holberton" > /var/www/html/index.html
+FROM ubuntu:14.04
+
+RUN apt-get update && \
+    apt-get install -y apache2 && \
+    echo "Hello Holberton" > /var/www/html/index.html
+
+EXPOSE 80
+
+CMD ["apachectl", "-D", "FOREGROUND"]
