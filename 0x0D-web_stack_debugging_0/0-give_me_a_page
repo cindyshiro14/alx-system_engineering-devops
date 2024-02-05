@@ -1,10 +1,17 @@
-# Install Apache and create Hello Holberton page
-FROM ubuntu:14.04
+#!/usr/bin/env bash
+# This script configures Apache to return a page containing Hello Holberton
 
-RUN apt-get update && \
-    apt-get install -y apache2 && \
-    echo "Hello Holberton" > /var/www/html/index.html
+# Update package information
+apt-get update
 
-EXPOSE 80
+# Install Apache
+apt-get install -y apache2
 
-CMD ["apachectl", "-D", "FOREGROUND"]
+# Create the Hello Holberton page
+echo "Hello Holberton" > /var/www/html/index.html
+
+# Start Apache
+service apache2 start
+
+# Ensure Apache starts on system boot
+update-rc.d apache2 defaults
